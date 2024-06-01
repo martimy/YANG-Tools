@@ -1,0 +1,12 @@
+<interfaces xmlns="http://example.com/ns/interfaces">
+    <interface>
+        <name>eth0</name>
+        <description>Main interface</description>
+        <enabled>true</enabled>
+    </interface>
+    <interface>
+        <name>eth1</name>
+        <description>Backup interface</description>
+        <enabled>false</enabled>
+    </interface>
+</interfaces>

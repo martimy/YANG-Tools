@@ -1,7 +1,11 @@
-# YANG Tools
+---
+output: pdf_document
+fontsize: 11pt
+geometry: margin=1in
+title: "A Beginner's Guide to YANG: Understanding the Basics"
+---
 
-
-## Introduction
+# Introduction:
 
 YANG (Yet Another Next Generation) is a data modeling language used in network management and device configuration. It is primarily associated with the NETCONF (Network Configuration Protocol) and RESTCONF (RESTful Network Configuration) protocols, which are used for network device configuration and management.
 
@@ -47,7 +51,7 @@ The are several YANG Tools and Utilities that help with using YANG:
 - YANG development tools such as Pyang, YANG Explorer, and YANG Development Kit (YDK) assist in creating, editing, and working with YANG models.
 
 
-## Resources
+# Resources
 
 
 - [Understanding YANG - Nokia Network Developer Portal.](https://network.developer.nokia.com/sr/learn/yang/understanding-yang/)
@@ -55,89 +59,48 @@ The are several YANG Tools and Utilities that help with using YANG:
 - [pyang](https://github.com/mbj4668/)
 - [Ultraconfig Generator](https://ultraconfig.com.au/)
 
-## Usage
+# Implementation
 
+To configure **FRRouting (FRR)** using **YANG**, you can follow these steps:
 
-**Install Required Tools**:
+1. **Install Required Tools**:
+   - Make sure you have the necessary tools installed. Two commonly used tools are:
+     - **yanglint**: A feature-rich tool for validation and conversion of YANG schemas and modeled data. You can use it to validate YANG modules, generate tree representations, and validate JSON/XML instance data¹.
+     - **pyang**: A YANG validator, transformator, and code generator written in Python. It can validate YANG modules, transform them into other formats, and generate code from the modules¹.
 
-Make sure you have the necessary tools installed. Two commonly used tools are:
+2. **Validate YANG Modules**:
+   - Use `yanglint` to validate your YANG module. For example:
+     ```
+     $ yanglint -p <yang-search-path> module.yang
+     ```
+   - This ensures that your YANG module is correct and adheres to the YANG specification.
 
-- yanglint: A feature-rich tool for validation and conversion of YANG schemas and modeled data. You can use it to validate YANG modules, generate tree representations, and validate JSON/XML instance data¹.
-- pyang: A YANG validator, transformator, and code generator written in Python. It can validate YANG modules, transform them into other formats, and generate code from the modules¹.
+3. **Generate Tree Representation**:
+   - To create a tree representation of your YANG module, use:
+     ```
+     $ yanglint -p <yang-search-path> -f tree module.yang
+     ```
 
-**Validate YANG Modules**:
+4. **Convert Instance Data**:
+   - Validate JSON or XML instance data using `yanglint`:
+     ```
+     $ yanglint -p <yang-search-path> module.yang data.json
+     $ yanglint -p <yang-search-path> -f xml module.yang data.xml
+     ```
+   - You can also convert instance data from one format to another.
 
-Use `yanglint` to validate your YANG module. For example:
+5. **Skeleton Instance Data**:
+   - Generate skeleton instance data (XML or JSON) for your YANG module:
+     ```
+     XML: $ pyang -p <yang-search-path> -f sample-xml-skeleton --sample-xml-skeleton-defaults module.yang -o module.xml
+     JSON: $ pyang -p <yang-search-path> -f jsonxsl module.yang -o module.xsl
+           $ xsltproc -o module.json module.xsl module.xml
+     ```
 
-```
-$ yanglint -p <yang-search-path> module.yang
-```
-    
-This ensures that your YANG module is correct and adheres to the YANG specification.
+6. **YANG Syntax Highlighting**:
+   - If you use Vim, consider adding YANG syntax highlighting with this plugin: [YANG.vim](https://github.com/nathanalderson/yang.vim)¹.
 
-**Generate Tree Representation**:
-
-To create a tree representation of your YANG module, use:
-
-```
-$ yanglint -p <yang-search-path> -f tree module.yang
-```
-
-**Convert Instance Data:
-
-Validate JSON or XML instance data using `yanglint`:
-
-```
-$ yanglint -p <yang-search-path> module.yang data.json
-$ yanglint -p <yang-search-path> -f xml module.yang data.xml
-```
-
-You can also convert instance data from one format to another.
-
-**Skeleton Instance Data**:
-
-Generate skeleton instance data (XML or JSON) for your YANG module:
-
-```
-XML: $ pyang -p <yang-search-path> -f sample-xml-skeleton --sample-xml-skeleton-defaults module.yang -o module.xml
-JSON: $ pyang -p <yang-search-path> -f jsonxsl module.yang -o module.xsl
-   $ xsltproc -o module.json module.xsl module.xml
-```
-
-
-**Validate a YANG module**:
-
-```
-$ pyang --ietf -p <yang-search-path> module.yang
-```
-
-**Generate tree representation of a YANG module**:
-
-```
-$ pyang -f tree -p <yang-search-path> module.yang
-```
-
-**Indent a YANG file**:
-
-```
-$ pyang -p <yang-search-path> \
-    --keep-comments -f yang --yang-canonical \
-    module.yang -o module.yang
-```
-
-**Generate an XML template**:
-
-```
-$ pyang -p . -f sample-xml-skeleton --sample-xml-skeleton-defaults pc-components.yang -o pc.xmlls /o	
-```
-
-Generate a JSON template
-pyang -p <yang-search-path> -f jsonxsl pc-components.yang -o pc.xsl
-xsltproc -o pc.json pc.xsl pc.xml
-
-
-**Validate a module**:
-
-```
-$ yanglint pc-components.yang pc.xml
-```
+(1) Yang Tools — FRR latest documentation. http://docs.frrouting.org/projects/dev-guide/en/latest/northbound/yang-tools.html.
+(2) Basic Commands — FRR latest documentation - FRRouting. https://docs.frrouting.org/en/latest/basic.html.
+(3) Learn YANG - Full Tutorial for Beginners - Ultra Config. https://ultraconfig.com.au/blog/learn-yang-full-tutorial-for-beginners/.
+(4) YANG Module Translation — FRR latest documentation. https://docs.frrouting.org/projects/dev-guide/en/latest/northbound/yang-module-translator.html.

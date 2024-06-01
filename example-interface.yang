@@ -1,0 +1,19 @@
+module example-interface {
+    namespace "http://example.com/ns/interfaces";
+    prefix "if";
+
+    container interfaces {
+        list interface {
+            key "name";
+            leaf name {
+                type string;
+            }
+            leaf description {
+                type string;
+            }
+            leaf enabled {
+                type boolean;
+            }
+        }
+    }
+}

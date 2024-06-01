@@ -1,0 +1,69 @@
+<pc xmlns="urn:example:pc-components">
+
+<cpu>
+
+  <brand>Intel</brand>
+
+  <model>i7-9700K</model>
+
+  <cores>8</cores>
+
+  <speed>3.60</speed>
+
+</cpu>
+
+<memory>
+
+  <size>16384</size>
+
+  <type>DDR4</type>
+
+  <speed>2666</speed>
+
+</memory>
+
+<storage>
+
+  <type>SSD</type>
+
+  <capacity>512</capacity>
+
+</storage>
+
+<peripherals>
+
+  <device>
+
+    <name>Device 1</name>
+
+    <type>keyboard</type>
+
+  </device>
+
+  <device>
+
+    <name>Device 2</name>
+
+    <type>mouse</type>
+
+  </device>
+
+  <device>
+
+    <name>Device 3</name>
+
+  <type>monitor</type>
+
+  </device>
+
+  <device>
+
+    <name>Device 4</name>
+
+    <type>printer</type>
+
+  </device>
+
+</peripherals>
+
+</pc>

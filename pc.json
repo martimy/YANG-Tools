@@ -1,0 +1,36 @@
+{
+  "pc:pc": {
+    "@xmlns:pc": "urn:example:pc-components",
+    "pc:cpu": {
+      "pc:brand": "Intel",
+      "pc:model": "Core i7-10700K",
+      "pc:cores": 8,
+      "pc:speed": 3.80
+    },
+    "pc:memory": {
+      "pc:size": 16384,
+      "pc:type": "DDR4",
+      "pc:speed": 3200
+    },
+    "pc:storage": {
+      "pc:type": "SSD",
+      "pc:capacity": 1000
+    },
+    "pc:peripherals": {
+      "pc:device": [
+        {
+          "pc:name": "Keyboard",
+          "pc:type": "keyboard"
+        },
+        {
+          "pc:name": "Mouse",
+          "pc:type": "mouse"
+        },
+        {
+          "pc:name": "Monitor",
+          "pc:type": "monitor"
+        }
+      ]
+    }
+  }
+}
