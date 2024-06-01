@@ -47,14 +47,6 @@ The are several YANG Tools and Utilities that help with using YANG:
 - YANG development tools such as Pyang, YANG Explorer, and YANG Development Kit (YDK) assist in creating, editing, and working with YANG models.
 
 
-## Resources
-
-
-- [Understanding YANG - Nokia Network Developer Portal.](https://network.developer.nokia.com/sr/learn/yang/understanding-yang/)
-- [Learn YANG - Full Tutorial for Beginners - Ultra Config](https://ultraconfig.com.au/blog/learn-yang-full-tutorial-for-beginners/)
-- [pyang](https://github.com/mbj4668/)
-- [Ultraconfig Generator](https://ultraconfig.com.au/)
-
 ## Usage
 
 
@@ -141,3 +133,12 @@ xsltproc -o pc.json pc.xsl pc.xml
 ```
 $ yanglint pc-components.yang pc.xml
 ```
+
+## Resources
+
+- [Understanding YANG - Nokia Network Developer Portal.](https://network.developer.nokia.com/sr/learn/yang/understanding-yang/)
+- [Learn YANG - Full Tutorial for Beginners - Ultra Config](https://ultraconfig.com.au/blog/learn-yang-full-tutorial-for-beginners/)
+- [pyang](https://github.com/mbj4668/)
+- [Ultraconfig Generator](https://ultraconfig.com.au/)
+
+
