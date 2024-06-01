@@ -3,11 +3,9 @@
 
 ## Introduction
 
-YANG (Yet Another Next Generation) is a data modeling language used in network management and device configuration. It is primarily associated with the NETCONF (Network Configuration Protocol) and RESTCONF (RESTful Network Configuration) protocols, which are used for network device configuration and management.
+YANG (Yet Another Next Generation) is a data modeling language used in network management and device configuration. YANG formally describes data models for network elements. It provides a way to define the data structure, hierarchy, and constraints for configuration and operational state data. YANG models are written in a human-readable format, making it easier for network engineers to understand and work with. YANG is designed to be platform-independent, allowing it to be used with various networking technologies and protocols.
 
-YANG formally describes data models for network elements. It provides a way to define the data structure, hierarchy, and constraints for configuration and operational state data. YANG models are written in a human-readable format, making it easier for network engineers to understand and work with. YANG is designed to be platform-independent, allowing it to be used with various networking technologies and protocols.
-
-YANG models are used in conjunction with protocols like NETCONF and RESTCONF to configure and manage network devices. They provide a standardized way to represent device configuration and operational state, improving interoperability and automation.
+YANG models are used in conjunction with protocols like NETCONF, RESTCONF, and gNMI to configure and manage network devices. They provide a standardized way to represent device configuration and operational state, improving interoperability and automation.
 
 Some of the concepts associated with YANG:
 
@@ -23,7 +21,8 @@ YANG Syntax:
 - Relationships between data elements are defined using *child* and *parent* statements.
 - Constraints and other metadata are specified using various YANG statements and annotations.
 
-Example YANG Module:
+
+The following is an example of a YANG Module. The module defines a container named *example-container* containing a leaf node named *example-leaf*
 
 ```yang
 module example-module {
@@ -38,24 +37,23 @@ module example-module {
  }
 }
 ```
-
-This simple YANG module defines a container named *example-container* containing a leaf node named *example-leaf*.
+.
 
 The are several YANG Tools and Utilities that help with using YANG:
 
 - YANG compilers and validators help validate YANG modules for correctness and adherence to the YANG syntax.
 - YANG development tools such as Pyang, YANG Explorer, and YANG Development Kit (YDK) assist in creating, editing, and working with YANG models.
 
+This repository define a Docker container that includes several YANG tools that can assist in learning and developing in YANG.
+
+## Installed Tools
+
+Two commonly used tools are included:
+
+- yanglint: A feature-rich tool for validation and conversion of YANG schemas and modeled data. You can use it to validate YANG modules, generate tree representations, and validate JSON/XML instance data.
+- pyang: A YANG validator, transformator, and code generator written in Python. It can validate YANG modules, transform them into other formats, and generate code from the modules.
 
 ## Usage
-
-
-**Install Required Tools**:
-
-Make sure you have the necessary tools installed. Two commonly used tools are:
-
-- yanglint: A feature-rich tool for validation and conversion of YANG schemas and modeled data. You can use it to validate YANG modules, generate tree representations, and validate JSON/XML instance data¹.
-- pyang: A YANG validator, transformator, and code generator written in Python. It can validate YANG modules, transform them into other formats, and generate code from the modules¹.
 
 **Validate YANG Modules**:
 
@@ -124,9 +122,11 @@ $ pyang -p . -f sample-xml-skeleton --sample-xml-skeleton-defaults pc-components
 ```
 
 Generate a JSON template
-pyang -p <yang-search-path> -f jsonxsl pc-components.yang -o pc.xsl
-xsltproc -o pc.json pc.xsl pc.xml
 
+```
+$ pyang -p <yang-search-path> -f jsonxsl pc-components.yang -o pc.xsl
+xsltproc -o pc.json pc.xsl pc.xml
+```
 
 **Validate a module**:
 
