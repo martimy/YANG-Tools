@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libyang-dev \
     wget \
     xsltproc \
+    yang-tools \
     && rm -rf /var/lib/apt/lists/* \
     && pip3 install --no-cache-dir pyang pyyaml \
     && wget -O /usr/local/lib/python3.8/site-packages/pyang/plugins/xpath.py \
