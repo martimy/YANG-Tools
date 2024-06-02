@@ -55,6 +55,12 @@ Two commonly used tools are included:
 
 ## Usage
 
+First, you need to pull the Docker image:
+
+```
+$ docker pull martimy/yangtools:latest
+```
+
 **Validate YANG Modules**:
 
 Use `yanglint` to validate your YANG module. For example:
