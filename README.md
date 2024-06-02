@@ -1,8 +1,5 @@
 # YANG Tools
 
-
-## Introduction
-
 YANG (Yet Another Next Generation) is a data modeling language used in network management and device configuration. YANG formally describes data models for network elements. It provides a way to define the data structure, hierarchy, and constraints for configuration and operational state data. YANG models are written in a human-readable format, making it easier for network engineers to understand and work with. YANG is designed to be platform-independent, allowing it to be used with various networking technologies and protocols.
 
 YANG models are used in conjunction with protocols like NETCONF, RESTCONF, and gNMI to configure and manage network devices. They provide a standardized way to represent device configuration and operational state, improving interoperability and automation.
@@ -55,90 +52,182 @@ Two commonly used tools are included:
 
 ## Usage
 
-First, you need to pull the Docker image:
+1. Clone the repository
 
-```
-$ docker pull martimy/yangtools:latest
-```
+   ```
+   $ git clone https://github.com/martimy/YANG-Tools
+   ```
+
+2. Pull the Docker image:
+
+   ```
+   $ docker pull martimy/yangtools:latest
+   ```
+
+3. Start the Docker container using one of the following methods:
+
+   ```
+   $ docker run --rm -it -v $(pwd)/.:/app/ martimy/yangtools:latest
+   ```
+
+   The `-v` option mounts the current directory from the host machine to the /app/ directory inside the container. This allows the container to access files in the current directory of the host. You can change the directory to the location of your yang models.
+
+   or, use the included script:
+
+   ```
+   $ ./yangtools <commands and options>
+   ```
+
+   I you use this option, remmeber that your yang models will be located in the /app directory.
+
+   or,
+
+   ```
+   $ ./yangtools
+   auser@1d07e45b4921:/app$
+   ```
+
+## Examples
+
+Here are some example of using the `yanglint` and `pyang`. Please refer to the tools' documentation for more details.
 
 **Validate YANG Modules**:
 
 Use `yanglint` to validate your YANG module. For example:
 
 ```
-$ yanglint -p <yang-search-path> module.yang
+$ yanglint pc-components.yang
 ```
-    
-This ensures that your YANG module is correct and adheres to the YANG specification.
 
-**Generate Tree Representation**:
+The tool will display nothing if the YANG module is correct and adheres to the YANG specification.
+
+```
+$ pyang --ietf -p . pc-components.yang
+```
+
+**Generate Tree Representation of YANG mdodule**:
 
 To create a tree representation of your YANG module, use:
 
 ```
-$ yanglint -p <yang-search-path> -f tree module.yang
+$ yanglint -f tree pc-components.yang
+module: pc-components
+  +--rw pc
+     +--rw cpu
+     |  +--rw brand?   string
+     |  +--rw model?   string
+     |  +--rw cores?   uint16
+     |  +--rw speed?   decimal64
+     +--rw memory
+     |  +--rw size?    uint64
+     |  +--rw type?    string
+     |  +--rw speed?   uint32
+     +--rw storage
+     |  +--rw type?       enumeration
+     |  +--rw capacity?   uint64
+     +--rw peripherals
+        +--rw device* [name]
+           +--rw name    string
+           +--rw type?   enumeration
 ```
 
-**Convert Instance Data:
+The `pyang` can produce the same output.
+
+```
+$ pyang -f tree -p <yang-search-path> pc-components.yang
+```
+
+
+**Convert Instance Data**:
 
 Validate JSON or XML instance data using `yanglint`:
 
 ```
-$ yanglint -p <yang-search-path> module.yang data.json
-$ yanglint -p <yang-search-path> -f xml module.yang data.xml
+$ yanglint pc-components.yang data.json
 ```
 
 You can also convert instance data from one format to another.
 
-**Skeleton Instance Data**:
+```
+$ yanglint -f json pc-components.yang data.xml
+```
+
+**Generate Skeleton Instance Data**:
 
 Generate skeleton instance data (XML or JSON) for your YANG module:
 
 ```
-XML: $ pyang -p <yang-search-path> -f sample-xml-skeleton --sample-xml-skeleton-defaults module.yang -o module.xml
-JSON: $ pyang -p <yang-search-path> -f jsonxsl module.yang -o module.xsl
-   $ xsltproc -o module.json module.xsl module.xml
+$ pyang -p . -f sample-xml-skeleton --sample-xml-skeleton-defaults pc-components.yang -o module.xml
 ```
 
-
-**Validate a YANG module**:
-
 ```
-$ pyang --ietf -p <yang-search-path> module.yang
+$ $ pyang -p . -f jsonxsl pc-components.yang -o module.xsl
+$ xsltproc -o module.json module.xsl module.xml
 ```
 
-**Generate tree representation of a YANG module**:
+```
+$ cat module.json
+{
+  "pc-components:pc": {
+    "cpu": {
+      "brand": "",
+      "model": "",
+      "cores": "",
+      "speed": ""
+    },
+    "memory": {
+      "size": "",
+      "type": "",
+      "speed": ""
+    },
+    "storage": {
+      "type": "",
+      "capacity": ""
+    },
+    "peripherals": {
+      "device": [
+        {
+          "name": "",
+          "type": ""
+        }
+      ]
+    }
+  }
+}
+```
+
+You can covert the above JSON file to YAML (assuming no errors):
 
 ```
-$ pyang -f tree -p <yang-search-path> module.yang
+$ jy-converter module.json
+$ cat module.yaml
+pc-components:pc:
+  cpu:
+    brand: ''
+    cores: ''
+    model: ''
+    speed: ''
+  memory:
+    size: ''
+    speed: ''
+    type: ''
+  peripherals:
+    device:
+    - name: ''
+      type: ''
+  storage:
+    capacity: ''
+    type: ''
 ```
 
 **Indent a YANG file**:
 
 ```
-$ pyang -p <yang-search-path> \
-    --keep-comments -f yang --yang-canonical \
-    module.yang -o module.yang
+$ pyang -p . \
+--keep-comments -f yang --yang-canonical \
+pc-components.yang -o output.yang
 ```
 
-**Generate an XML template**:
-
-```
-$ pyang -p . -f sample-xml-skeleton --sample-xml-skeleton-defaults pc-components.yang -o pc.xmlls /o	
-```
-
-Generate a JSON template
-
-```
-$ pyang -p <yang-search-path> -f jsonxsl pc-components.yang -o pc.xsl
-xsltproc -o pc.json pc.xsl pc.xml
-```
-
-**Validate a module**:
-
-```
-$ yanglint pc-components.yang pc.xml
-```
 
 ## Resources
 
