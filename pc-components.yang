@@ -7,6 +7,10 @@ module pc-components {
   contact "contact@example.com";
   description "YANG module for describing PC components.";
 
+  revision "2024-06-03" {
+    description "Initial Revision";
+  }
+
   container pc {
 	  description "Personal Computer (PC) component.";
 	  
